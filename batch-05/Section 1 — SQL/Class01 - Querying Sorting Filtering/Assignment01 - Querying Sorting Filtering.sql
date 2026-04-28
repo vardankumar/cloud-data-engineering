@@ -14,8 +14,13 @@
 -- ============================================================
 
 -- Write your query below:
-
-
+select
+	first_name,
+	last_name,
+	city,
+	phone
+from sales.customers
+where state = 'CA' and phone is not null;
 
 
 -- ============================================================
@@ -27,6 +32,14 @@
 -- ============================================================
 
 -- Write your query below:
+select
+	product_id, 
+	product_name, 
+	model_year,  
+	list_price
+from production.products
+order by model_year desc, list_price asc;
+
 
 
 
@@ -42,10 +55,24 @@
 
 -- Part a:
 
+select
+	TOP 5
+	product_name,   
+	list_price
+from production.products
+order by list_price desc;
+
+
 
 -- Part b:
 
+select
+	TOP 5 PERCENT
+	*
+from production.products
+order by list_price asc;
 
+-- The 5% result returns 17 rows.
 
 
 -- ============================================================
@@ -60,11 +87,31 @@
 
 -- Page 1:
 
+select
+	TOP 10
+	*
+from production.products
+order by list_price desc;
 
 -- Page 2:
 
+select
+	*
+from production.products
+order by list_price desc
+OFFSET 10 ROWS
+FETCH NEXT 10 ROWS	ONLY;
+
 
 -- Page 3:
+
+select
+	*
+from production.products
+order by list_price desc
+OFFSET 20 ROWS
+FETCH NEXT 10 ROWS	ONLY;
+
 
 
 
@@ -82,12 +129,23 @@
 
 -- Part a:
 
+select
+	distinct state
+from sales.customers
+order by state;
 
 -- Part b:
 
+select
+	distinct state, city
+from sales.customers
+order by state, city;
 
 -- Part c:
 
+select
+	count(distinct(model_year))
+from production.products;
 
 
 
@@ -103,3 +161,13 @@
 -- ============================================================
 
 -- Write your query below:
+
+select
+	product_id, 
+	product_name, 
+	brand_id, 
+	category_id,
+	list_price 
+from production.products
+where (list_price >= 500 AND list_price <= 1500) AND (model_year = 2019 OR model_year = 2020)
+ORDER BY list_price;
